@@ -5,6 +5,7 @@ pipetools - alpine based pipeline helper
 ## Tools
 
 * ca-certificates
+* sudo
 * curl
 * bash
 * gettext
