@@ -1,11 +1,10 @@
-# pipetools
+# Pipetools
 
-pipetools - alpine based pipeline helper
+Pipetools - alpine based pipeline helper for CI/CD
 
 ## Tools
 
 * ca-certificates
-* sudo
 * curl
 * bash
 * gettext
@@ -22,4 +21,5 @@ pipetools - alpine based pipeline helper
 
 * pip
 * yamllint
+* jsonlint
 * dos2unix
