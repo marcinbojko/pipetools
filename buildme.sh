@@ -7,7 +7,7 @@ coverage="./coverage.txt"
 echo Version: "$version" found
 echo Release: "$release" found
 echo maintainer: "$maintainer" found
-if [ ! -z "$version" ] && [ ! -z "$release" ]; then
+if [ -n "$version" ] && [ -n "$release" ]; then
   docker build -t "$release":"$version" .
   build_status=$?
   docker container prune --force
@@ -21,7 +21,7 @@ fi
 if [ "$build_status" == 0 ]; then
   echo "Docker build succeed"
   rm -rf dive.log||true
-  rm -rf ./*.txt|true
+  rm -rf ./*.txt||true
   date > "$coverage"
   trivy --output coverage-"$version"_trivy.txt "$release":"$version"
   dive --ci "$release":"$version" > coverage-"$version"_dive.txt
