@@ -3,10 +3,17 @@ release=$(grep "LABEL RELEASE" Dockerfile|awk '{print $2}'|cut -d\" -f2)
 version=$(grep "LABEL VERSION" Dockerfile|awk '{print $2}'|cut -d\" -f2)
 maintainer=$(grep "LABEL MAINTAINER" Dockerfile|awk '{print $2}'|cut -d\" -f2)
 coverage="./coverage.txt"
-
 echo Version: "$version" found
 echo Release: "$release" found
 echo maintainer: "$maintainer" found
+
+if dockerfilelint Dockerfile; then
+  echo "Dockerfilelint passed"
+else
+  echo "Dockerfilelint errors, correct"
+  exit 1
+fi
+
 if [ -n "$version" ] && [ -n "$release" ]; then
   docker build -t "$release":"$version" .
   build_status=$?
