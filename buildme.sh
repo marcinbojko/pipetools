@@ -1,7 +1,8 @@
 #!/bin/bash
-release=$(grep "LABEL RELEASE" Dockerfile|awk '{print $2}'|cut -d\" -f2)
-version=$(grep "LABEL VERSION" Dockerfile|awk '{print $2}'|cut -d\" -f2)
-maintainer=$(grep "LABEL MAINTAINER" Dockerfile|awk '{print $2}'|cut -d\" -f2)
+export DOCKER_BUILDKIT=1
+release=$(grep -i "LABEL RELEASE" Dockerfile|awk '{print $2}'|cut -d\" -f2)
+version=$(grep -i "LABEL VERSION" Dockerfile|awk '{print $2}'|cut -d\" -f2)
+maintainer=$(grep -i "LABEL MAINTAINER" Dockerfile|awk '{print $2}'|cut -d\" -f2)
 coverage="./coverage.txt"
 echo Version: "$version" found
 echo Release: "$release" found
