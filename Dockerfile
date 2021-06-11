@@ -1,5 +1,5 @@
 FROM alpine:3.13.5 AS build
-LABEL version="v0.0.10"
+LABEL version="v0.0.11"
 LABEL release="pipetools"
 LABEL maintainer="marcinbojko"
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
