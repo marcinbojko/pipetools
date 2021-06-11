@@ -17,6 +17,7 @@ Pipetools - alpine based pipeline helper for CI/CD
 * python3-dev
 * py3-pip
 * py3-wheel
+* shellcheck
 
 ## Python 3 packages
 
