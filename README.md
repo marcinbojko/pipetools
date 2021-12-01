@@ -18,6 +18,10 @@ Pipetools - alpine based pipeline helper for CI/CD
 * py3-pip
 * py3-wheel
 * shellcheck
+* tzdata
+* git
+* httpie
+* sshfs
 
 ## Python 3 packages
 

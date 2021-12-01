@@ -16,7 +16,7 @@ else
 fi
 
 if [ -n "$version" ] && [ -n "$release" ]; then
-  docker build --pull --no-cache -t "$release":"$version" .
+  docker build --pull --no-cache --squash -t "$release":"$version" .
   build_status=$?
   docker container prune --force
   # let's tag latest
