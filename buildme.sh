@@ -31,7 +31,7 @@ if [ "$build_status" == 0 ]; then
   rm -rf dive.log||true
   rm -rf ./*.txt||true
   date > "$coverage"
-  trivy --output coverage-"$version"_trivy.txt "$release":"$version"
+  trivy image --output coverage-"$version"_trivy.txt "$release":"$version"
   dive --ci "$release":"$version" > coverage-"$version"_dive.txt
   sed -i 's/\x1B\[[0-9;]*[JKmsu]//g' coverage-"$version"_dive.txt||true
   dockle -f json -o coverage-"$version"_dockle.txt "$release":"$version"

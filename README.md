@@ -22,6 +22,7 @@ Pipetools - alpine based pipeline helper for CI/CD
 * git
 * httpie
 * sshfs
+* nmap
 
 ## Python 3 packages
 
