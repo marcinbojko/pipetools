@@ -30,3 +30,13 @@ Pipetools - alpine based pipeline helper for CI/CD
 * yamllint
 * jsonlint
 * dos2unix
+
+## 3rd party
+
+* terraform
+* tflint
+* syft
+* hadolint
+* tfsec
+* tflint
+

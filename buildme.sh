@@ -31,6 +31,13 @@ if [ "$build_status" == 0 ]; then
   rm -rf dive.log||true
   rm -rf ./*.txt||true
   date > "$coverage"
+  {
+    terraform version
+    tfsec --version
+    syft --version
+    hadolint --version
+    tflint --version
+  } >> "$coverage"
   echo Trivy
   trivy image --output coverage-"$version"_trivy.txt "$release":"$version"
   echo Dive
