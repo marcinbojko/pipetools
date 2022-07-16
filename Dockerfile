@@ -1,12 +1,12 @@
-FROM alpine:3.15.4 AS build
-LABEL version="v0.1.2"
+FROM alpine:3.16.0 AS build
+LABEL version="v0.1.3"
 LABEL release="pipetools"
 LABEL maintainer="marcinbojko"
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 # additions
-COPY --from=hashicorp/terraform:1.2.2 /bin/terraform /bin/terraform
-COPY --from=aquasec/tfsec:v1.22.0 /usr/bin/tfsec /bin/tfsec
-COPY --from=anchore/syft:v0.46.3 /syft /bin/syft
+COPY --from=hashicorp/terraform:1.2.5 /bin/terraform /bin/terraform
+COPY --from=aquasec/tfsec:v1.26.3 /usr/bin/tfsec /bin/tfsec
+COPY --from=anchore/syft:v0.51.0 /syft /bin/syft
 COPY --from=hadolint/hadolint:v2.10.0 /bin/hadolint /bin/hadolint
 COPY --from=ghcr.io/terraform-linters/tflint:v0.37.0 /usr/local/bin/tflint /bin/tflint
 
