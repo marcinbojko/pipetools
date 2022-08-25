@@ -16,9 +16,9 @@ else
 fi
 
 if [ -n "$version" ] && [ -n "$release" ]; then
-  docker build --pull --no-cache --squash -t "$release":"$version" .
+  docker build --pull --no-cache -t "$release":"$version" .
   build_status=$?
-  docker container prune --force
+  # docker container prune --force
   # let's tag latest
   docker tag "$release":"$version" "$release":latest
 else
@@ -32,11 +32,12 @@ if [ "$build_status" == 0 ]; then
   rm -rf ./*.txt||true
   date > "$coverage"
   {
-    terraform version
-    tfsec --version
-    syft --version
-    hadolint --version
-    tflint --version
+    docker run -it --rm "$release:$version" terraform version
+    docker run -it --rm "$release:$version" tfsec --version
+    docker run -it --rm "$release:$version" syft --version
+    docker run -it --rm "$release:$version" hadolint --version
+    docker run -it --rm "$release:$version" tflint --version
+    docker run -it --rm "$release:$version" datree version
   } >> "$coverage"
   echo Trivy
   trivy image --output coverage-"$version"_trivy.txt "$release":"$version"
