@@ -39,4 +39,3 @@ Pipetools - alpine based pipeline helper for CI/CD
 * hadolint
 * tfsec
 * tflint
-
