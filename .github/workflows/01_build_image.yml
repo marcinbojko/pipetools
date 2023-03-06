@@ -35,7 +35,8 @@ jobs:
           echo "release=$release" >> $GITHUB_ENV
           echo "maintainer=$maintainer" >> $GITHUB_ENV
           export DOCKER_BUILDKIT=1
-          docker build --pull --no-cache -t  "$maintainer/$release":"$version" .
+          docker build --pull --no-cache -t  "$maintainer/$release":"$version"-dev .
+          docker push "$maintainer/$release":"$version"-dev
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
