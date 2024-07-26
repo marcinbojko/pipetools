@@ -33,11 +33,11 @@ if [ "$build_status" == 0 ]; then
   date > "$coverage"
   {
     docker run -it --rm "$release:$version" terraform version
-    docker run -it --rm "$release:$version" tfsec --version
+#    docker run -it --rm "$release:$version" tfsec --version
     docker run -it --rm "$release:$version" syft --version
     docker run -it --rm "$release:$version" hadolint --version
     docker run -it --rm "$release:$version" tflint --version
-    docker run -it --rm "$release:$version" datree version
+ #   docker run -it --rm "$release:$version" datree version
   } >> "$coverage"
   echo Trivy
   trivy image --output coverage-"$version"_trivy.txt "$release":"$version"
