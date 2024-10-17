@@ -11,6 +11,7 @@ Pipetools - alpine based pipeline helper for CI/CD
 * gettext
 * git
 * gzip
+* git-lfs
 * httpie
 * nmap
 * openssh
@@ -39,4 +40,3 @@ Pipetools - alpine based pipeline helper for CI/CD
 * syft
 * terraform
 * tflint
-
