@@ -1,0 +1,10 @@
+---
+failure-threshold: warning
+ignored:
+  - DL3018
+  - DL3013
+  - DL3016
+  - DL4006
+  - DL3002
+  - SC3036
+strict-labels: false

@@ -1,51 +1,51 @@
 #!/bin/bash
 export DOCKER_BUILDKIT=1
-release=$(grep -i "LABEL RELEASE" Dockerfile|awk '{print $2}'|cut -d\" -f2)
-version=$(grep -i "LABEL VERSION" Dockerfile|awk '{print $2}'|cut -d\" -f2)
-maintainer=$(grep -i "LABEL MAINTAINER" Dockerfile|awk '{print $2}'|cut -d\" -f2)
+release=$(grep -i "LABEL RELEASE" Dockerfile | awk '{print $2}' | cut -d\" -f2)
+version=$(grep -i "LABEL VERSION" Dockerfile | awk '{print $2}' | cut -d\" -f2)
+maintainer=$(grep -i "LABEL MAINTAINER" Dockerfile | awk '{print $2}' | cut -d\" -f2)
 coverage="./coverage.txt"
 echo Version: "$version" found
 echo Release: "$release" found
 echo maintainer: "$maintainer" found
 
 if dockerfilelint Dockerfile; then
-  echo "Dockerfilelint passed"
+	echo "Dockerfilelint passed"
 else
-  echo "Dockerfilelint errors, correct"
-  exit 1
+	echo "Dockerfilelint errors, correct"
+	exit 1
 fi
 
 if [ -n "$version" ] && [ -n "$release" ]; then
-  docker build --pull --no-cache -t "$release":"$version" .
-  build_status=$?
-  # docker container prune --force
-  # let's tag latest
-  docker tag "$release":"$version" "$release":latest
+	docker build --pull -t "$release":"$version" .
+	build_status=$?
+	# docker container prune --force
+	# let's tag latest
+	docker tag "$release":"$version" "$release":latest
 else
-  echo "No version or release found, exiting"
-  exit 1
+	echo "No version or release found, exiting"
+	exit 1
 fi
 # coverage
 if [ "$build_status" == 0 ]; then
-  echo "Docker build succeed"
-  rm -rf dive.log||true
-  rm -rf ./*.txt||true
-  date > "$coverage"
-  {
-    docker run -it --rm "$release:$version" terraform version
-#    docker run -it --rm "$release:$version" tfsec --version
-    docker run -it --rm "$release:$version" syft --version
-    docker run -it --rm "$release:$version" hadolint --version
-    docker run -it --rm "$release:$version" tflint --version
- #   docker run -it --rm "$release:$version" datree version
-  } >> "$coverage"
-  echo Trivy
-  trivy image --output coverage-"$version"_trivy.txt "$release":"$version"
-  echo Dive
-  dive --ci "$release":"$version" > coverage-"$version"_dive.txt
-  sed -i 's/\x1B\[[0-9;]*[JKmsu]//g' coverage-"$version"_dive.txt||true
-  echo Dockle
-  sudo dockle -f json -o coverage-"$version"_dockle.txt "$release":"$version"
+	echo "Docker build succeed"
+	rm -rf dive.log || true
+	rm -rf ./*.txt || true
+	date >"$coverage"
+	{
+		docker run -it --rm "$release:$version" terraform version
+		#    docker run -it --rm "$release:$version" tfsec --version
+		docker run -it --rm "$release:$version" syft --version
+		docker run -it --rm "$release:$version" hadolint --version
+		docker run -it --rm "$release:$version" tflint --version
+		#   docker run -it --rm "$release:$version" datree version
+	} >>"$coverage"
+	echo Trivy
+	trivy image --output coverage-"$version"_trivy.txt "$release":"$version"
+	echo Dive
+	dive --ci "$release":"$version" >coverage-"$version"_dive.txt
+	sed -i 's/\x1B\[[0-9;]*[JKmsu]//g' coverage-"$version"_dive.txt || true
+	echo Dockle
+	sudo dockle -f json -o coverage-"$version"_dockle.txt "$release":"$version"
 else
- echo "Docker build failed, exiting now"
+	echo "Docker build failed, exiting now"
 fi
