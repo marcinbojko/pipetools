@@ -1,11 +1,11 @@
 FROM alpine:3.21.3 AS build
-LABEL version="0.3.4"
+LABEL version="0.3.5"
 LABEL release="pipetools"
 LABEL maintainer="marcinbojko"
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 COPY entrypoint.sh /entrypoint.sh
 # additions
-COPY --from=hashicorp/terraform:1.11.4 /bin/terraform /bin/terraform
+COPY --from=hashicorp/terraform:1.12.0 /bin/terraform /bin/terraform
 COPY --from=anchore/syft:v1.23.1 /syft /bin/syft
 COPY --from=hadolint/hadolint:v2.12.0 /bin/hadolint /bin/hadolint
 COPY --from=ghcr.io/terraform-linters/tflint:v0.52.0 /usr/local/bin/tflint /bin/tflint
