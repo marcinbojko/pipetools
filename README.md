@@ -42,3 +42,5 @@ Pipetools - alpine based pipeline helper for CI/CD
 - syft
 - terraform
 - tflint
+- axiom
+- infisical
